@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: "file:./dev.db"
+      JWT_SECRET: "ci-test-secret"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm install
+      - run: npm --workspace server run prisma:generate
+      - run: npm --workspace server run typecheck
+      - run: npm --workspace client run typecheck
+      - run: npm --workspace server run test
+      - run: npm run build
