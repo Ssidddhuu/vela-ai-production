@@ -7,7 +7,6 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsup src/index.ts --format esm --clean",
     "start": "node dist/index.js",
-    "postinstall": "prisma generate --schema=./prisma/schema.prisma",
     "prisma:deploy": "prisma migrate deploy",
     "typecheck": "tsc --noEmit"
   },
